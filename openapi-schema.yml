@@ -1,0 +1,226 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /clients/:
+    get:
+      operationId: listClients
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+          description: ''
+      tags:
+      - clients
+    post:
+      operationId: createClient
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateClient'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateClient'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateClient'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateClient'
+          description: ''
+      tags:
+      - clients
+  /clients/{id}/:
+    get:
+      operationId: retrieveClient
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this client.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+          description: ''
+      tags:
+      - clients
+    put:
+      operationId: updateClient
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this client.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Client'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Client'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+          description: ''
+      tags:
+      - clients
+    patch:
+      operationId: partialUpdateClient
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this client.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Client'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Client'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+          description: ''
+      tags:
+      - clients
+    delete:
+      operationId: destroyClient
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this client.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - clients
+  /init/:
+    post:
+      operationId: createInit
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - init
+  /authorize/:
+    post:
+      operationId: createAuthorize
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - authorize
+components:
+  schemas:
+    Client:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 32
+        description:
+          type: string
+          maxLength: 128
+        services:
+          type: object
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - name
+    CreateClient:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        secret:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          writeOnly: true
+        description:
+          type: string
+          writeOnly: true
+        services:
+          type: object
+          readOnly: true
+      required:
+      - name
