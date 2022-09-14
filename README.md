@@ -8,8 +8,13 @@ I use docker to build and run the API. Run the following commands to get it up a
 
 ```
 docker build -t auth-api:latest .
-docker run --rm -it -p 8000:8000/tcp auth-api:latest
+docker run --rm -it \
+    -p 8000:8000/tcp \
+    -v <LOCAL_DATA_DIR>:/data \
+    auth-api:latest
 ```
+
+Where `<LOCAL_DATA_DIR>` is a directory on your local machine to persist the data of the application.
 
 ### Client Libraries
 

@@ -3,6 +3,7 @@ FROM python:3.8.9
 # The enviroment variable ensures that the python output is set straight
 # to the terminal with out buffering it first
 ENV PYTHONUNBUFFERED 1
+ENV DATABASE_DIR /data
 
 COPY src /drf_src
 COPY requirements.txt /drf_src/requirements.txt
