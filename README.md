@@ -10,7 +10,7 @@ I use docker to build and run the API. Run the following commands to get it up a
 docker build -t auth-api:latest .
 docker run --rm -it \
     -p 8000:8000/tcp \
-    -v <LOCAL_DATA_DIR>:/data \
+    -v <LOCAL_DATA_DIR>:/mnt/data \
     auth-api:latest
 ```
 

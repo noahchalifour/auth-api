@@ -3,7 +3,8 @@ FROM python:3.8.9
 # The enviroment variable ensures that the python output is set straight
 # to the terminal with out buffering it first
 ENV PYTHONUNBUFFERED 1
-ENV DATABASE_DIR /data
+ENV DATABASE_DIR /mnt/data
+RUN mkdir /mnt/data
 
 COPY src /drf_src
 COPY requirements.txt /drf_src/requirements.txt
@@ -22,7 +23,5 @@ RUN pip install -r requirements.txt
 VOLUME /drf_src
 
 EXPOSE 8000
-
-RUN python manage.py migrate
 
 CMD scripts/run.sh
