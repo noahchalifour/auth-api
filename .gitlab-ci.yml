@@ -19,11 +19,14 @@ build-job:
 
 deploy-prod:
   stage: deploy
-  script:
+  before_script:
     - eval $(ssh-agent -s)
     - ssh-add <(echo -e "$SSH_PRIVATE_KEY")
-    - mkdir ~/.ssh
-    - echo "$SSH_HOST" > ~/.ssh/known_hosts
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
     - DOCKER_HOST=ssh://tower docker run -d
       --name auth-api
       -p 8000:8000/tcp
