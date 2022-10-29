@@ -1,11 +1,11 @@
 image: docker
 
 services:
-  - docker:dind
+  - name: docker:dind
+    command: ["--insecure-registry=tower:5050"]
 
 variables:
   DOCKER_TLS_CERTDIR: ""
-  DOCKER_OPTS: "--insecure-registry tower:5050"
 
 before_script:
   - docker info
