@@ -1,0 +1,31 @@
+image: docker
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_TLS_CERTDIR: ""
+
+before_script:
+  - docker info
+  - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+
+build-job:
+  stage: build
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:latest
+
+deploy-prod:
+  stage: deploy
+  script:
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo -e "$SSH_PRIVATE_KEY")
+    - mkdir ~/.ssh
+    - echo "$SSH_HOST" > ~/.ssh/known_hosts
+    - DOCKER_HOST=ssh://tower docker run -d
+      -p 8000:8000/tcp
+      -v $LOCAL_DATA_DIR:/mnt/data
+      $CI_REGISTRY_IMAGE:latest
+  environment: production
+
