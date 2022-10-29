@@ -27,7 +27,8 @@ deploy-prod:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - DOCKER_HOST=ssh://tower docker stop auth-api || true && docker rm auth-api || true
+    - DOCKER_HOST=ssh://tower docker stop auth-api || true
+    - DOCKER_HOST=ssh://tower docker rm auth-api || true
     - DOCKER_HOST=ssh://tower docker run -d
       --name auth-api
       -p 8000:8000/tcp
