@@ -2,10 +2,16 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from pathlib import Path
+import os
+import json
 
 from .models import Client
 from . import serializers
 from .utils import auth
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 class ClientViewSet(viewsets.ModelViewSet):
@@ -23,15 +29,18 @@ class Init(APIView):
 
     def post(self, request, format=None):
         try:
-            auth.AccessKey.objects.get()
-
-            return Response({
-                "message": "Application already initialized."
-            }, status=status.HTTP_400_BAD_REQUEST)
+            key = auth.AccessKey.objects.get()
         except auth.AccessKey.DoesNotExist:
-            pass
+            key = auth.AccessKey.objects.create()
 
-        key = auth.AccessKey.objects.create()
+            key_filepath = os.path.join(os.environ.get('DATA_DIR', BASE_DIR), 'access_key.json')
+            with open(key_filepath, 'w') as f:
+                json.dump({
+                    'access_key': key.key
+                }, f)
+
+        print(f'Access key = {key.key}')
+        
         serializer = auth.AccessKeySerializer(key)
 
         return Response(serializer.data)

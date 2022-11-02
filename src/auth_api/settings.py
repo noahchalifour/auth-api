@@ -80,7 +80,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(
-            os.environ.get('DATABASE_DIR', BASE_DIR), 'db.sqlite3'),
+            os.environ.get('DATA_DIR', BASE_DIR), 'db.sqlite3'),
     }
 }
 

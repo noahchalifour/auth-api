@@ -6,10 +6,7 @@ import secrets
 
 
 def generate_access_key():
-    key = secrets.token_hex(128)
-    print(f"Generated access key = {key}")
-
-    return key
+    return secrets.token_hex(128)
 
 
 class AccessKey(models.Model):

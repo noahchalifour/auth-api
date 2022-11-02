@@ -6,11 +6,7 @@ while :
 do
     response=$(curl -X POST --silent $SERVER/init/)
 
-    if [[ "$response" == *"Application already initialized"* ]]
-    then
-        echo "Application already initialized."
-        exit 0
-    elif [[ "$response" == *"\"key\":"* ]]
+    if [[ "$response" == *"\"key\":"* ]]
     then
         echo "Application initialized."
         exit 0
